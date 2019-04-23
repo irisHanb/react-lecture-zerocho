@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>gugudan</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // hooks: 기존의 함수 component에 state, ref 등이 사용가능하도록~
+      const Gugudan = () => {
+        const getRandomNum = () => Math.ceil(Math.random() * 9);
+
+        const [first, setFirst] = React.useState(getRandomNum());
+        const [second, setSecond] = React.useState(getRandomNum());
+        const [userAnswer, setUserAnswer] = React.useState('');
+        const [result, setResult] = React.useState('');
+        const refInput = React.useRef(null);
+
+        const checkAnswer = e => {
+          e.preventDefault();
+          if (parseInt(userAnswer) === first * second) {
+            setFirst(getRandomNum());
+            setSecond(getRandomNum());
+            setResult(
+              `딩동댕!!! ${first} * ${second} = ${userAnswer} 이(가) 맞습니다. (^____^) `
+            );
+          } else {
+            setResult('이러기야? 틀렸잖아...  ㅡ ㅡ; ');
+          }
+          setUserAnswer('');
+          refInput.current.focus();
+        };
+
+        const updateInput = e => {
+          setUserAnswer(e.target.value);
+        };
+
+        return (
+          <React.Fragment>
+            <p>
+              {first} 와 {second} 의 곱은
+            </p>
+            <form onSubmit={checkAnswer}>
+              <input
+                type="number"
+                ref={refInput}
+                value={userAnswer}
+                onChange={updateInput}
+              />
+              <button>정답확인</button>
+            </form>
+            <p>{result}</p>
+          </React.Fragment>
+        );
+      };
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(<Gugudan />, document.querySelector('#root'));
+    </script>
+  </body>
+</html>

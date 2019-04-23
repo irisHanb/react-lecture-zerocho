@@ -26,32 +26,26 @@
           };
         }
 
-        // 싦무에서는 이렇게 많이 사용한다.
-        // state = {
-        //   firstNum: getNum(),
-        //   lastNum: getNum(),
-        //   answer: '',
-        //   result: ''
-        // };
-
         getNum = () => Math.ceil(Math.random() * 9);
 
         checkAnswer = e => {
-          console.log('check answer>>>');
           e.preventDefault();
-          // const right = this.state.firstNum * this.state.lastNum;
+
           if (
             parseInt(this.state.answer) ===
             this.state.firstNum * this.state.lastNum
           ) {
-            this.setState(prevState => ({
-              firstNum: this.getNum(),
-              lastNum: this.getNum(),
-              answer: '',
-              result: `딩동댕!!! ${prevState.firstNum} * ${
-                prevState.lastNum
-              } = ${prevState.answer} 입니다.`
-            }));
+            // prevState를 사용시 return 하는 객체를 정의한다.
+            this.setState(prevState => {
+              return {
+                firstNum: this.getNum(),
+                lastNum: this.getNum(),
+                answer: '',
+                result: `딩동댕!!! ${prevState.firstNum} * ${
+                  prevState.lastNum
+                } = ${prevState.answer} 입니다.`
+              };
+            });
           } else {
             this.setState({
               answer: '',
@@ -63,6 +57,9 @@
         onChange = e => {
           this.setState({ answer: e.currentTarget.value });
         };
+
+        // ref: dom element
+        onRefInput = ele => (this.input = ele);
 
         render() {
           return (
@@ -76,6 +73,7 @@
                   type="number"
                   value={this.state.answer}
                   onChange={this.onChange}
+                  ref={this.onRefInput}
                 />
                 <button>정답확인</button>
               </form>
