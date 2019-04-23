@@ -26,6 +26,14 @@
           };
         }
 
+        // 싦무에서는 이렇게 많이 사용한다.
+        // state = {
+        //   firstNum: getNum(),
+        //   lastNum: getNum(),
+        //   answer: '',
+        //   result: ''
+        // };
+
         getNum = () => Math.ceil(Math.random() * 9);
 
         checkAnswer = e => {
@@ -58,6 +66,7 @@
 
         render() {
           return (
+            // 이하 jsx
             <React.Fragment>
               <p>
                 {this.state.firstNum} 곱하기 {this.state.lastNum} 는?
