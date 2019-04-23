@@ -1,5 +1,5 @@
 const React = require('react');
-const { Component } = require('react');
+const { Component } = React;
 
 class Gugudan extends Component {
   getRandomNum = () => Math.ceil(Math.random() * 9);
