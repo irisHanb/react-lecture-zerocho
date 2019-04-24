@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development', // 배포시: production
@@ -18,21 +19,29 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.\(js|jsx)$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        options: [
-          [
-            '@babel/preset-env',
-            {
-              targets: {
-                browsers: ['> 1% in KR']
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  browsers: ['> 10% in KR']
+                }
+                // debug: true
               }
-            }
+            ],
+            '@babel/preset-react'
           ],
-          '@babel/preset-react'
-        ]
+          plugins: ['@babel/plugin-proposal-class-properties']
+        }
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
+  ]
 };
